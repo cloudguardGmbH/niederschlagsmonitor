@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Entwurf B — Messnetz-Leitwarte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=B612+Mono:wght@400;700&family=B612:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ground: #141619;
+    --panel: #191c20;
+    --panel-2: #1e2226;
+    --seam: rgba(220, 230, 240, 0.08);
+    --ink: #d2d8de;
+    --ink-2: #939ba4;
+    --ink-3: #61686f;
+    --grid: #23272c;
+    --baseline: #32383e;
+    --tele: #4aa3ff;
+    --amber: #ffb020;
+    --good: #0ca30c;
+    --sans: 'B612', system-ui, sans-serif;
+    --mono: 'B612 Mono', ui-monospace, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--ground); color: var(--ink); font-family: var(--sans); }
+  ::selection { background: #4aa3ff; color: #10131a; }
+
+  .draft-ribbon {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 5px 20px; border-bottom: 1px solid var(--seam);
+    font: 400 11px/1 var(--mono); color: var(--ink-3); letter-spacing: 0.08em;
+  }
+  .draft-ribbon a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--ink-3); padding-bottom: 1px; }
+  .draft-ribbon a:hover { color: var(--ink); border-color: var(--ink); }
+
+  .console { max-width: 1480px; margin: 0 auto; padding: 0 16px 16px; }
+
+  header.top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 4px;
+  }
+  header.top .title { font: 700 13px/1 var(--sans); letter-spacing: 0.18em; }
+  header.top .title span { color: var(--ink-3); font-weight: 400; }
+  header.top .clock { font: 400 12px/1.5 var(--mono); color: var(--ink-2); text-align: right; }
+  header.top .clock b { color: var(--ink); font-weight: 700; }
+
+  .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 8px; }
+  .cell { background: var(--panel); border: 1px solid var(--seam); border-radius: 4px; }
+
+  .station-tile { grid-column: span 4; padding: 14px 16px; display: flex; gap: 14px; align-items: flex-start; }
+  .station-tile .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--good); margin-top: 6px; box-shadow: 0 0 0 3px rgba(12,163,12,0.15); }
+  .station-tile h1 { font: 700 19px/1.15 var(--sans); }
+  .station-tile .meta { font: 400 11px/1.8 var(--mono); color: var(--ink-2); letter-spacing: 0.03em; }
+  .station-tile .chev { margin-left: auto; color: var(--ink-3); align-self: center; }
+  .station-tile:hover { border-color: rgba(220,230,240,0.2); cursor: pointer; }
+
+  .field { grid-column: span 2; padding: 12px 14px; }
+  .field .lbl { font: 400 9.5px/1.6 var(--mono); color: var(--ink-3); letter-spacing: 0.13em; }
+  .field .val { font: 400 13px/1.5 var(--mono); color: var(--ink); }
+  .field .val b { font-weight: 700; }
+  .field .ok { color: var(--good); }
+
+  .ranges { grid-column: span 4; display: flex; align-items: stretch; padding: 6px; gap: 4px; }
+  .ranges button {
+    flex: 1; appearance: none; background: var(--panel-2); border: 1px solid var(--seam);
+    border-radius: 3px; color: var(--ink-2); font: 400 11.5px/1 var(--mono); cursor: pointer;
+  }
+  .ranges button:hover { color: var(--ink); }
+  .ranges button[aria-pressed="true"] { background: var(--tele); border-color: var(--tele); color: #0d1117; font-weight: 700; }
+
+  .value-cell { grid-column: span 2; padding: 13px 16px 15px; }
+  .value-cell .lbl { font: 400 9.5px/1.7 var(--mono); color: var(--ink-3); letter-spacing: 0.13em; }
+  .value-cell .val { font: 700 27px/1.15 var(--mono); letter-spacing: -0.01em; }
+  .value-cell .val small { font: 400 13px/1 var(--mono); color: var(--ink-2); }
+  .value-cell .sub { font: 400 10.5px/1.7 var(--mono); color: var(--ink-2); }
+
+  .plot-cell { grid-column: span 12; padding: 14px 16px 10px; }
+  .plot-head { display: flex; align-items: baseline; gap: 10px; }
+  .plot-head h2 { font: 700 12px/1 var(--sans); letter-spacing: 0.12em; }
+  .plot-head .unit { font: 400 10.5px/1 var(--mono); color: var(--ink-3); }
+  .plot-head .readout { margin-left: auto; font: 400 11.5px/1 var(--mono); color: var(--ink-2); visibility: hidden; white-space: nowrap; }
+  .plot-head .readout b { color: var(--ink); }
+  .cum-cell { grid-column: span 12; padding: 12px 16px 8px; }
+
+  footer.log { padding: 12px 6px 4px; font: 400 11px/1.9 var(--mono); color: var(--ink-3); letter-spacing: 0.02em; }
+  footer.log b { color: var(--ink-2); font-weight: 400; }
+  footer.log .ok { color: var(--good); }
+
+  @media (max-width: 1100px) {
+    .station-tile { grid-column: span 12; }
+    .field { grid-column: span 4; }
+    .ranges { grid-column: span 12; }
+    .value-cell { grid-column: span 4; }
+  }
+</style>
+</head>
+<body>
+<div class="draft-ribbon">
+  <span>ENTWURF B · MESSNETZ-LEITWARTE</span>
+  <a href="./preview-a-nowcast.html">← ENTWURF A — NOWCAST-MONITOR ANSEHEN</a>
+</div>
+
+<div class="console">
+  <header class="top">
+    <div class="title">MESSNETZ-LEITWARTE <span>· GEOSPHERE KLIMA-V2-10MIN</span></div>
+    <div class="clock">UTC <b>15.09.2024 23:50</b> &nbsp;·&nbsp; LOKAL <b>16.09.2024 01:50</b> MESZ</div>
+  </header>
+
+  <div class="grid">
+    <div class="cell station-tile" role="button" aria-haspopup="listbox" tabindex="0">
+      <div class="dot" aria-hidden="true"></div>
+      <div>
+        <h1>WIEN HOHE WARTE</h1>
+        <div class="meta">ID 105 · WIEN · 48,2486 N 16,3564 O · 198 M</div>
+        <div class="meta" style="color:var(--good)">ONLINE · LETZTE MELDUNG 01:50</div>
+      </div>
+      <svg class="chev" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M3 5.5 L7 9.5 L11 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <div class="cell field">
+      <div class="lbl">DATENSTAND</div>
+      <div class="val"><b>16.09. 01:50</b></div>
+      <div class="val" style="color:var(--ink-2)">Verzug 0 min</div>
+    </div>
+    <div class="cell field">
+      <div class="lbl">ABRUF</div>
+      <div class="val"><b>289</b> Werte</div>
+      <div class="val ok">0 Lücken</div>
+    </div>
+    <div class="cell ranges" role="group" aria-label="Zeitraum">
+      <button aria-pressed="false">24 H</button>
+      <button aria-pressed="true">48 H</button>
+      <button aria-pressed="false">7 T</button>
+      <button aria-pressed="false">30 T</button>
+      <button aria-pressed="false">FREI</button>
+    </div>
+
+    <div class="cell value-cell">
+      <div class="lbl">NIEDERSCHLAG Σ 48 H</div>
+      <div class="val">125,4<small> mm</small></div>
+      <div class="sub">Ereignis 14.–16.09.</div>
+    </div>
+    <div class="cell value-cell">
+      <div class="lbl">MAX INTENSITÄT</div>
+      <div class="val">2,3<small> mm/10min</small></div>
+      <div class="sub">So 07:50 MESZ</div>
+    </div>
+    <div class="cell value-cell">
+      <div class="lbl">NIEDERSCHLAGSDAUER</div>
+      <div class="val">36,2<small> h</small></div>
+      <div class="sub">217 von 289 Intervallen</div>
+    </div>
+    <div class="cell value-cell">
+      <div class="lbl">LUFTTEMPERATUR</div>
+      <div class="val">8,0<small> °C</small></div>
+      <div class="sub">zuletzt 01:50</div>
+    </div>
+    <div class="cell value-cell">
+      <div class="lbl">TL MIN / MAX</div>
+      <div class="val">7,3<small> / </small>10,3<small> °C</small></div>
+      <div class="sub">48-h-Spanne</div>
+    </div>
+    <div class="cell value-cell">
+      <div class="lbl">SCHWELLE STARK</div>
+      <div class="val" style="color:var(--amber)">14×<small> überschritten</small></div>
+      <div class="sub">≥ 1,7 mm/10min</div>
+    </div>
+
+    <div class="cell plot-cell">
+      <div class="plot-head">
+        <h2>NIEDERSCHLAG</h2><span class="unit">mm / 10 min</span>
+        <div class="readout" id="readout"></div>
+      </div>
+      <div id="main-wrap"></div>
+    </div>
+
+    <div class="cell cum-cell">
+      <div class="plot-head"><h2 style="color:var(--ink-2)">KUMULATIV</h2><span class="unit">mm</span></div>
+      <div id="cum-wrap"></div>
+    </div>
+  </div>
+
+  <footer class="log">
+    <div><span class="ok">▸</span> 01:50:12 SYNC klima-v2-10min <b>OK</b> · 289 Messwerte · 0 Lücken · 1 Request</div>
+    <div>▸ 01:50:12 STATION 105 WIEN HOHE WARTE bestätigt · COMBINED · gültig seit 1993</div>
+    <div>▸ QUELLE GeoSphere Austria Data Hub · CC BY 4.0 · dataset.api.hub.geosphere.at</div>
+  </footer>
+</div>
+
+<script src="./preview-data.js"></script>
+<script>
+(function () {
+  const E = window.EVENT;
+  const N = E.timestamps.length;
+  const THRESH = 1.7;
+
+  const fmtT = new Intl.DateTimeFormat('de-AT', { timeZone: 'Europe/Vienna', hour: '2-digit', minute: '2-digit' });
+  const fmtD = new Intl.DateTimeFormat('de-AT', { timeZone: 'Europe/Vienna', weekday: 'short', day: '2-digit', month: '2-digit' });
+  const nf1 = new Intl.NumberFormat('de-AT', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+
+  const wrap = document.getElementById('main-wrap');
+  const cumWrap = document.getElementById('cum-wrap');
+  const readout = document.getElementById('readout');
+
+  const PAD_L = 42, PAD_R = 10;
+  const H = 260, PAD_T = 16, PAD_B = 24;
+  const CH = 96, CPAD_T = 8, CPAD_B = 20;
+
+  function render() {
+    const W = wrap.clientWidth;
+    if (W < 480) return; // Panel verborgen/zu schmal – nächster Resize rendert
+    const plotW = W - PAD_L - PAD_R;
+    const x = (i) => PAD_L + (i / N) * plotW;
+    const yMax = 2.5;
+    const y = (v) => PAD_T + (1 - v / yMax) * (H - PAD_T - PAD_B);
+    const slot = plotW / N;
+    const bw = Math.max(1.6, Math.min(24, slot - 1.2));
+
+    let s = '';
+    const dayStarts = [];
+    let prevDay = '';
+    for (let i = 0; i < N; i++) {
+      const d = fmtD.format(E.timestamps[i]);
+      if (d !== prevDay) { dayStarts.push({ i, label: d }); prevDay = d; }
+    }
+    dayStarts.forEach((d) => {
+      if (d.i > 0) s += `<line x1="${x(d.i)}" y1="${PAD_T}" x2="${x(d.i)}" y2="${H - PAD_B + 4}" stroke="var(--baseline)" stroke-width="1"/>`;
+      s += `<text x="${x(d.i) + 6}" y="${H - PAD_B + 15}" fill="var(--ink-3)" font-family="var(--mono)" font-size="9.5">${d.label}</text>`;
+    });
+    for (const tv of [1, 2]) {
+      s += `<line x1="${PAD_L}" y1="${y(tv)}" x2="${PAD_L + plotW}" y2="${y(tv)}" stroke="var(--grid)" stroke-width="1"/>`;
+      s += `<text x="${PAD_L - 7}" y="${y(tv) + 3.5}" text-anchor="end" fill="var(--ink-3)" font-family="var(--mono)" font-size="9.5">${tv},0</text>`;
+    }
+    for (let i = 36; i < N; i += 36) {
+      const t = fmtT.format(E.timestamps[i]);
+      if (t !== '00:00') s += `<text x="${x(i)}" y="${H - PAD_B + 15}" text-anchor="middle" fill="var(--ink-3)" font-family="var(--mono)" font-size="9.5" opacity="0.7">${t}</text>`;
+    }
+    s += `<line x1="${PAD_L}" y1="${y(0)}" x2="${PAD_L + plotW}" y2="${y(0)}" stroke="var(--baseline)" stroke-width="1"/>`;
+    s += `<text x="${PAD_L - 7}" y="${y(0) + 3.5}" text-anchor="end" fill="var(--ink-3)" font-family="var(--mono)" font-size="9.5">0</text>`;
+
+    // Warnschwelle (Amber = Warnvokabular, nur hier)
+    s += `<line x1="${PAD_L}" y1="${y(THRESH)}" x2="${PAD_L + plotW}" y2="${y(THRESH)}" stroke="var(--amber)" stroke-width="1" opacity="0.75"/>`;
+    s += `<text x="${PAD_L + plotW - 4}" y="${y(THRESH) - 5}" text-anchor="end" fill="var(--amber)" font-family="var(--mono)" font-size="9.5" letter-spacing="1">SCHWELLE STARK 1,7</text>`;
+
+    // Telemetrie-Balken, einfarbig; Überschreitungen in Amber markiert
+    for (let i = 0; i < N; i++) {
+      const v = E.rr[i];
+      if (v == null || v <= 0) continue;
+      const bx = x(i) + (slot - bw) / 2;
+      const by = y(v);
+      const r = Math.min(1.2, bw / 2);
+      const col = v >= THRESH ? 'var(--amber)' : 'var(--tele)';
+      s += `<path d="M${bx},${y(0)} L${bx},${by + r} Q${bx},${by} ${bx + r},${by} L${bx + bw - r},${by} Q${bx + bw},${by} ${bx + bw},${by + r} L${bx + bw},${y(0)} Z" fill="${col}"/>`;
+    }
+
+    s += `<line id="xh" x1="0" y1="${PAD_T}" x2="0" y2="${H - PAD_B}" stroke="var(--ink-2)" stroke-width="1" visibility="hidden"/>`;
+    s += `<rect id="hit" x="${PAD_L}" y="0" width="${plotW}" height="${H}" fill="transparent"/>`;
+    wrap.innerHTML = `<svg id="main-svg" width="${W}" height="${H}" role="img" aria-label="Niederschlag je 10 Minuten">${s}</svg>`;
+
+    // Kumulativ
+    const cum = []; let acc = 0;
+    for (let i = 0; i < N; i++) { acc += E.rr[i] || 0; cum.push(acc); }
+    const cy = (v) => CPAD_T + (1 - v / 140) * (CH - CPAD_T - CPAD_B);
+    let c = '';
+    dayStarts.forEach((d) => {
+      if (d.i > 0) c += `<line x1="${x(d.i)}" y1="${CPAD_T}" x2="${x(d.i)}" y2="${CH - CPAD_B}" stroke="var(--baseline)" stroke-width="1"/>`;
+    });
+    for (const tv of [50, 100]) {
+      c += `<line x1="${PAD_L}" y1="${cy(tv)}" x2="${PAD_L + plotW}" y2="${cy(tv)}" stroke="var(--grid)" stroke-width="1"/>`;
+      c += `<text x="${PAD_L - 7}" y="${cy(tv) + 3.5}" text-anchor="end" fill="var(--ink-3)" font-family="var(--mono)" font-size="9.5">${tv}</text>`;
+    }
+    c += `<line x1="${PAD_L}" y1="${cy(0)}" x2="${PAD_L + plotW}" y2="${cy(0)}" stroke="var(--baseline)" stroke-width="1"/>`;
+    let path = '';
+    for (let i = 0; i < N; i++) path += `${i ? 'L' : 'M'}${x(i) + slot / 2},${cy(cum[i])}`;
+    c += `<path d="${path}" fill="none" stroke="var(--tele)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+    const ex = x(N - 1) + slot / 2, ey = cy(cum[N - 1]);
+    c += `<circle cx="${ex}" cy="${ey}" r="6" fill="var(--panel)"/><circle cx="${ex}" cy="${ey}" r="4" fill="var(--tele)"/>`;
+    c += `<text x="${ex - 10}" y="${ey - 8}" text-anchor="end" fill="var(--ink)" font-family="var(--mono)" font-size="11.5" font-weight="700">Σ 125,4 mm</text>`;
+    cumWrap.innerHTML = `<svg width="${W}" height="${CH}" role="img" aria-label="Kumulativer Niederschlag">${c}</svg>`;
+
+    const svg = document.getElementById('main-svg');
+    const xh = svg.querySelector('#xh');
+    svg.querySelector('#hit').addEventListener('pointermove', (ev) => {
+      const rect = svg.getBoundingClientRect();
+      const px = ev.clientX - rect.left;
+      const i = Math.max(0, Math.min(N - 1, Math.round(((px - PAD_L) / plotW) * N)));
+      const cx = x(i) + slot / 2;
+      xh.setAttribute('x1', cx); xh.setAttribute('x2', cx); xh.setAttribute('visibility', 'visible');
+      const ts = E.timestamps[i];
+      readout.style.visibility = 'visible';
+      readout.innerHTML = `<b>${fmtD.format(ts)} ${fmtT.format(ts)}</b> · rr <b>${nf1.format(E.rr[i] ?? 0)}</b> mm · tl <b>${nf1.format(E.tl[i] ?? 0)}</b> °C · Σ <b>${nf1.format(cum[i])}</b> mm`;
+    });
+    svg.addEventListener('pointerleave', () => {
+      xh.setAttribute('visibility', 'hidden');
+      readout.style.visibility = 'hidden';
+    });
+  }
+
+  render();
+  let raf = 0;
+  const queue = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(render); };
+  addEventListener('resize', queue);
+  new ResizeObserver(queue).observe(wrap);
+})();
+</script>
+</body>
+</html>

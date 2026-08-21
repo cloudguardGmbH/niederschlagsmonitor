@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-21",
+  "title": "Design System: Niederschlagsmonitor",
+  "extensions": {
+    "colorMeta": {
+      "r1": { "role": "primary", "displayName": "Regenblau leicht", "canonical": "#6da7ec", "tonalRamp": ["#6da7ec", "#3987e5", "#1c5cab", "#0d366b"] },
+      "r2": { "role": "primary", "displayName": "Regenblau mäßig", "canonical": "#3987e5" },
+      "r3": { "role": "primary", "displayName": "Regenblau stark", "canonical": "#1c5cab" },
+      "r4": { "role": "primary", "displayName": "Regenblau sehr stark", "canonical": "#0d366b" },
+      "line": { "role": "primary", "displayName": "Kumulativ-Linie", "canonical": "#1c5cab" },
+      "r1-nacht": { "role": "primary", "displayName": "Regenblau leicht (Nachtschirm)", "canonical": "#184f95", "tonalRamp": ["#184f95", "#2a78d6", "#6da7ec", "#b7d3f6"] },
+      "line-nacht": { "role": "primary", "displayName": "Kumulativ-Linie (Nachtschirm)", "canonical": "#6da7ec" },
+      "good": { "role": "secondary", "displayName": "Vollständig-Grün", "canonical": "#006300" },
+      "warn": { "role": "secondary", "displayName": "Messlücken-Amber", "canonical": "#8a5f00" },
+      "crit": { "role": "secondary", "displayName": "Abbruch-Rot", "canonical": "#b32d2d" },
+      "good-nacht": { "role": "secondary", "displayName": "Vollständig-Grün (Nachtschirm)", "canonical": "#0ca30c" },
+      "warn-nacht": { "role": "secondary", "displayName": "Messlücken-Amber (Nachtschirm)", "canonical": "#fab219" },
+      "crit-nacht": { "role": "secondary", "displayName": "Abbruch-Rot (Nachtschirm)", "canonical": "#e66767" },
+      "ground": { "role": "neutral", "displayName": "Grund", "canonical": "#e9edf2" },
+      "screen": { "role": "neutral", "displayName": "Tagschirm-Fläche", "canonical": "#f4f6f9", "tonalRamp": ["#e9edf2", "#f4f6f9", "#dfe5eb", "#c2ccd6"] },
+      "seam": { "role": "neutral", "displayName": "Haarlinien-Naht", "canonical": "rgba(16, 24, 34, 0.13)" },
+      "ink": { "role": "neutral", "displayName": "Tinte", "canonical": "#10151c", "tonalRamp": ["#10151c", "#45525f", "#5f6c79"] },
+      "grid": { "role": "neutral", "displayName": "Gitterlinie", "canonical": "#dfe5eb" },
+      "baseline": { "role": "neutral", "displayName": "Grundlinie", "canonical": "#c2ccd6" },
+      "wash": { "role": "neutral", "displayName": "Tagesband-Lasur", "canonical": "rgba(16, 24, 34, 0.035)" },
+      "wash-we": { "role": "neutral", "displayName": "Wochenend-Lasur", "canonical": "rgba(16, 24, 34, 0.06)" },
+      "lift": { "role": "neutral", "displayName": "Zeilen-Hover-Lasur", "canonical": "rgba(16, 24, 34, 0.05)" },
+      "ground-nacht": { "role": "neutral", "displayName": "Grund (Nachtschirm)", "canonical": "#0e141b" },
+      "screen-nacht": { "role": "neutral", "displayName": "Nachtschirm-Fläche", "canonical": "#12181f", "tonalRamp": ["#0e141b", "#12181f", "#1c242e", "#2c3947"] },
+      "ink-nacht": { "role": "neutral", "displayName": "Tinte (Nachtschirm)", "canonical": "#dde5ee", "tonalRamp": ["#dde5ee", "#94a5b6", "#728698"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Kennzahl v1", "purpose": "Führende Kennzahl der Staffel (Summe); mobil 34px. Einheit daneben klein in Mono." },
+      "headline": { "displayName": "Panelkopf", "purpose": "h2 im figure-head jedes Messblatts; quiet-Variante 12px in ink-2 für Sekundärpanels." },
+      "title": { "displayName": "Kennzahl v2", "purpose": "Absteigende Staffelwerte (v2 21px, v3 15px/1.3)." },
+      "body": { "displayName": "Fließtext", "purpose": "Basis 14px; Listen, Zeilen und Eingaben 13px; Gegenstände (Stationsname) fett." },
+      "readout": { "displayName": "Readout", "purpose": "Fadenkreuz-Zeile und Datenstand; tabular-nums; Emphase als b in ink 700." },
+      "label": { "displayName": "Micro-Label", "purpose": "VERSAL-Mono über Werten und als Gruppierkopf, 0.12–0.14em gesperrt; Statuszeile 11px bei 0.04em." }
+    },
+    "shadows": [
+      { "name": "pop", "value": "0 14px 36px rgba(2, 6, 12, 0.35), 0 2px 8px rgba(2, 6, 12, 0.2)", "purpose": "Einzige echte Elevation des Systems — nur Popover (Stationsregister, Freier Bereich), in beiden Schirmen." }
+    ],
+    "motion": [
+      { "name": "blende", "value": "opacity 0.2s ease-out", "purpose": "Ein-Zug-Regel: der gesamte alte Stand dimmt beim Nachladen auf 45 % und bleibt ablesbar." },
+      { "name": "dreh", "value": "transform 0.15s ease-out", "purpose": "Chevron- und Tri-Rotation beim Öffnen von Register und Tabellen-Zwilling." },
+      { "name": "radar-sweep", "value": "radar-sweep 1.6s linear infinite", "purpose": "Der Radarkegel der Marke rotiert nur, während ein Abruf läuft." },
+      { "name": "reduced-motion", "value": "transition-duration/animation-duration 0.01ms !important", "purpose": "prefers-reduced-motion: reduce deaktiviert sämtliche Bewegung global." }
+    ],
+    "breakpoints": [
+      { "name": "rail-bruch", "value": "1040px" },
+      { "name": "kompakt", "value": "760px" },
+      { "name": "blatt-schmal (Containerbreite)", "value": "700px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Zeitraum-Segmente",
+      "kind": "custom",
+      "refersTo": "segment",
+      "description": "Segmentgruppe für Presets; aktives Segment ist invertierte Tinte, das Frei-Segment trägt den gewählten Bereich als Label.",
+      "html": "<div class=\"ds-segments\"><button class=\"ds-seg\">24 h</button><button class=\"ds-seg\">48 h</button><button class=\"ds-seg\" aria-pressed=\"true\">7 Tage</button><button class=\"ds-seg\">30 Tage</button><button class=\"ds-seg\">Frei</button></div>",
+      "css": ".ds-segments { display: flex; width: max-content; border: 1px solid var(--seam, rgba(16,24,34,0.13)); border-radius: 6px; overflow: hidden; background: var(--screen, #f4f6f9); } .ds-seg { font: 400 11.5px/1 'B612 Mono', ui-monospace, monospace; letter-spacing: 0.03em; color: var(--ink-2, #45525f); background: none; border: none; border-right: 1px solid var(--seam, rgba(16,24,34,0.13)); padding: 10px 13px; cursor: pointer; white-space: nowrap; } .ds-seg:last-child { border-right: none; } .ds-seg:hover { color: var(--ink, #10151c); background: var(--wash, rgba(16,24,34,0.035)); } .ds-seg[aria-pressed='true'] { background: var(--ink, #10151c); color: var(--ground, #e9edf2); font-weight: 700; } .ds-seg:focus-visible { outline: 2px solid var(--accent, #10151c); outline-offset: 2px; }"
+    },
+    {
+      "name": "Primärtaste",
+      "kind": "button",
+      "refersTo": "apply",
+      "description": "Einzige gefüllte Taste — invertierte Tinte, nur in Popovers; die Beschriftung nennt die Folge.",
+      "html": "<button class=\"ds-btn-primary\">7 TAGE ABRUFEN</button>",
+      "css": ".ds-btn-primary { width: 100%; min-width: 200px; background: var(--ink, #10151c); color: var(--ground, #e9edf2); border: none; border-radius: 5px; padding: 9px; font: 700 11.5px/1 'B612 Mono', ui-monospace, monospace; letter-spacing: 0.08em; cursor: pointer; } .ds-btn-primary:disabled { opacity: 0.45; cursor: not-allowed; } .ds-btn-primary:focus-visible { outline: 2px solid var(--accent, #10151c); outline-offset: 2px; }"
+    },
+    {
+      "name": "Konturtaste (Themenschalter)",
+      "kind": "button",
+      "refersTo": "theme-btn",
+      "description": "Konturierte Nebentaste mit gezeichnetem Icon und VERSAL-Mono-Label; Hover hebt Tinte und Kontur.",
+      "html": "<button class=\"ds-ctl\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" aria-hidden=\"true\"><path d=\"M11.5 8.6 A5.2 5.2 0 1 1 5.4 2.5 A4.2 4.2 0 0 0 11.5 8.6 Z\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/></svg>NACHT</button>",
+      "css": ".ds-ctl { display: inline-flex; align-items: center; gap: 7px; background: none; border: 1px solid var(--seam, rgba(16,24,34,0.13)); border-radius: 6px; padding: 8px 11px; color: var(--ink-2, #45525f); font: 400 10.5px/1 'B612 Mono', ui-monospace, monospace; letter-spacing: 0.08em; cursor: pointer; } .ds-ctl:hover { color: var(--ink, #10151c); border-color: var(--baseline, #c2ccd6); } .ds-ctl:focus-visible { outline: 2px solid var(--accent, #10151c); outline-offset: 2px; }"
+    },
+    {
+      "name": "Stationswähler-Trigger",
+      "kind": "nav",
+      "refersTo": "station",
+      "description": "Zweizeiliger Trigger: Gegenstand fett in Sans, Metazeile in Mono; MapPin und Chevron gezeichnet.",
+      "html": "<button class=\"ds-station\"><svg class=\"ds-geo\" width=\"15\" height=\"15\" viewBox=\"0 0 15 15\" fill=\"none\" aria-hidden=\"true\"><path d=\"M7.5 1.5 a4.6 4.6 0 0 1 4.6 4.6 c0 3.2-4.6 7.4-4.6 7.4 s-4.6-4.2-4.6-7.4 A4.6 4.6 0 0 1 7.5 1.5 Z\" stroke=\"currentColor\" stroke-width=\"1.4\"/><circle cx=\"7.5\" cy=\"6\" r=\"1.7\" stroke=\"currentColor\" stroke-width=\"1.3\"/></svg><span><span class=\"ds-station-n\">Wien Hohe Warte</span><span class=\"ds-station-m\">WIEN · 198 M · ID 105</span></span><svg class=\"ds-chev\" width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\" aria-hidden=\"true\"><path d=\"M2.5 4.5 L6 8 L9.5 4.5\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></button>",
+      "css": ".ds-station { display: flex; align-items: center; gap: 10px; background: var(--screen, #f4f6f9); border: 1px solid var(--seam, rgba(16,24,34,0.13)); border-radius: 6px; padding: 7px 12px 7px 10px; min-width: 290px; text-align: left; cursor: pointer; color: var(--ink, #10151c); } .ds-station:hover { border-color: var(--baseline, #c2ccd6); } .ds-geo { color: var(--ink-3, #5f6c79); flex: none; } .ds-station-n { display: block; font: 700 14px/1.1 'B612', system-ui, sans-serif; } .ds-station-m { display: block; font: 400 10px/1.5 'B612 Mono', ui-monospace, monospace; color: var(--ink-2, #45525f); letter-spacing: 0.04em; font-variant-numeric: tabular-nums; } .ds-chev { margin-left: auto; color: var(--ink-2, #45525f); flex: none; }"
+    },
+    {
+      "name": "Suchfeld",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "In den Grund eingelassenes Feld auf Schirmfläche; Fokus als Tinten-Ring, Placeholder in dritter Tintenstufe.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"529 Stationen durchsuchen …\" aria-label=\"Station suchen\">",
+      "css": ".ds-input { width: 260px; padding: 9px 11px; background: var(--ground, #e9edf2); border: 1px solid var(--seam, rgba(16,24,34,0.13)); border-radius: 5px; color: var(--ink, #10151c); font: 400 13px/1 'B612', system-ui, sans-serif; } .ds-input::placeholder { color: var(--ink-3, #5f6c79); } .ds-input:focus { outline: 2px solid var(--accent, #10151c); outline-offset: 0; }"
+    },
+    {
+      "name": "Popover mit Registerzeilen",
+      "kind": "card",
+      "refersTo": "popover",
+      "description": "Die einzige schwebende Fläche: Schirmgrund, Naht, 8px Radius und der eine Schatten; sticky VERSAL-Gruppenkopf, Zeilen mit Lift-Hover.",
+      "html": "<div class=\"ds-pop\"><div class=\"ds-pop-t\">NIEDERÖSTERREICH</div><button class=\"ds-row\" data-active=\"true\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" aria-hidden=\"true\"><path d=\"M2.5 7.5 L5.5 10.5 L11.5 3.5\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg><span class=\"ds-row-n\" style=\"font-weight:700\">Gumpoldskirchen</span><span class=\"ds-row-m\">NÖ · 219 M</span></button><button class=\"ds-row\"><span style=\"width:14px;flex:none\"></span><span class=\"ds-row-n\">Krems</span><span class=\"ds-row-m\">NÖ · 203 M</span></button></div>",
+      "css": ".ds-pop { width: 300px; background: var(--screen, #f4f6f9); border: 1px solid var(--seam, rgba(16,24,34,0.13)); border-radius: 8px; padding: 8px 6px; box-shadow: 0 14px 36px rgba(2, 6, 12, 0.35), 0 2px 8px rgba(2, 6, 12, 0.2); } .ds-pop-t { font: 400 9.5px/1 'B612 Mono', ui-monospace, monospace; color: var(--ink-3, #5f6c79); letter-spacing: 0.14em; padding: 8px 10px 5px; } .ds-row { display: flex; align-items: baseline; gap: 10px; width: 100%; padding: 7px 10px; border: none; background: none; border-radius: 5px; text-align: left; cursor: pointer; color: var(--ink, #10151c); } .ds-row:hover, .ds-row[data-active='true'] { background: var(--lift, rgba(16,24,34,0.05)); } .ds-row-n { font: 400 13px/1.2 'B612', system-ui, sans-serif; } .ds-row-m { margin-left: auto; font: 400 10px/1.2 'B612 Mono', ui-monospace, monospace; color: var(--ink-3, #5f6c79); letter-spacing: 0.03em; white-space: nowrap; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Kennzahl",
+      "kind": "custom",
+      "refersTo": "segment",
+      "description": "Staffel-Kennzahl: VERSAL-Mono-Label, Wert fett in Sans (v1 46px), Einheit klein in Mono, Notizzeile mit Statuspunkt.",
+      "html": "<div class=\"ds-stat\"><div class=\"ds-stat-lbl\">SUMME 7 TAGE</div><div class=\"ds-stat-v1\">22,2<small> mm</small></div><div class=\"ds-note ds-note-warn\"><span class=\"ds-dot\"></span>2 MESSLÜCKEN IM ZEITRAUM</div></div>",
+      "css": ".ds-stat { display: flex; flex-direction: column; gap: 2px; } .ds-stat-lbl { font: 400 9.5px/1.7 'B612 Mono', ui-monospace, monospace; color: var(--ink-3, #5f6c79); letter-spacing: 0.14em; } .ds-stat-v1 { font: 700 46px/1.02 'B612', system-ui, sans-serif; letter-spacing: -0.01em; color: var(--ink, #10151c); } .ds-stat-v1 small { font: 400 17px/1 'B612 Mono', ui-monospace, monospace; color: var(--ink-2, #45525f); } .ds-note { font: 400 10.5px/1.7 'B612 Mono', ui-monospace, monospace; color: var(--ink-2, #45525f); } .ds-note-warn { color: var(--warn, #8a5f00); } .ds-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: currentColor; margin-right: 5px; vertical-align: 1px; }"
+    },
+    {
+      "name": "Statuszeile",
+      "kind": "custom",
+      "refersTo": "segment",
+      "description": "Gedruckte Zustandszeile: VERSAL-Mono-Segmente mit gezeichneten Icons; Emphase über Tintenstufe statt Fett, Warnungen in Amber.",
+      "html": "<div class=\"ds-status\"><span class=\"ds-si\"><svg width=\"9\" height=\"9\" viewBox=\"0 0 9 9\" aria-hidden=\"true\"><path d=\"M2.5 1.5 L7 4.5 L2.5 7.5 Z\" fill=\"currentColor\"/></svg><b>1005 MESSWERTE</b> · ANZEIGE 30-MIN-SUMMEN</span><span>STATION <b>105 WIEN HOHE WARTE</b></span><span class=\"ds-sw\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\" aria-hidden=\"true\"><path d=\"M6 1.6 L11 10.4 L1 10.4 Z\" stroke=\"currentColor\" stroke-width=\"1.3\" stroke-linejoin=\"round\"/><line x1=\"6\" y1=\"4.6\" x2=\"6\" y2=\"7.2\" stroke=\"currentColor\" stroke-width=\"1.3\" stroke-linecap=\"round\"/><circle cx=\"6\" cy=\"8.9\" r=\"0.7\" fill=\"currentColor\"/></svg>2 MESSLÜCKEN</span><span>QUELLE <a class=\"ds-sl\" href=\"#\">GEOSPHERE AUSTRIA</a> · CC BY 4.0</span></div>",
+      "css": ".ds-status { display: flex; gap: 18px; flex-wrap: wrap; padding: 10px 0; border-top: 1px solid var(--seam, rgba(16,24,34,0.13)); font: 400 11px/1.7 'B612 Mono', ui-monospace, monospace; color: var(--ink-3, #5f6c79); letter-spacing: 0.04em; font-variant-numeric: tabular-nums; } .ds-status b { color: var(--ink-2, #45525f); font-weight: 400; } .ds-si { display: inline-flex; align-items: center; gap: 6px; } .ds-sw { color: var(--warn, #8a5f00); display: inline-flex; align-items: center; gap: 6px; } .ds-sl { color: inherit; text-decoration: underline; text-underline-offset: 3px; } .ds-sl:hover { color: var(--ink, #10151c); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Der Nowcast-Monitor",
+    "overview": "Die Oberfläche ist ein Beobachtungsschirm in Radarviewer-Grammatik: oben eine Kontrollleiste, in der Mitte das Messblatt (Nadel-Plot plus Kumulativ-Panel auf geteilter Zeitachse), rechts die Kennzahlen-Staffel, unten eine gedruckte Statuszeile. Verfolgung statt Verwaltung — der Monitor verweigert das Karten-Grid-Adminpanel seiner Kategorie. Chrome tritt zurück; die Messreihe ist der Held und darf laut sein.\n\nEs gibt zwei gleichwertige Schirme, Tagschirm und Nachtschirm, plus Auto-Folge des Systems. Das Material ist eine flache Schirmfläche, die sich ausschließlich über Haarlinien-Nähte gliedert; echte Elevation existiert nur auf Popovers. Farbe ist streng rationiert: die klassifizierte Blau-Rampe gehört ausschließlich den Messdaten, Amber ausschließlich der Warnung — alles Übrige spricht in drei Tintenstufen auf Schirmgrund. B612 und B612 Mono (Cockpit-Schriften, selbst gehostet) tragen die Instrumenten-Anmutung; Zustände drucken sich selbst als Textzeilen, nie als Toast oder Overlay.",
+    "keyCharacteristics": [
+      "Radarviewer-Grammatik: Leiste, Messblatt, Staffel, Statuszeile — keine Karten-Kacheln, keine Panels mit Schatten",
+      "Nachtschirm und Tagschirm vollwertig; drei Theme-Scopes, Schalter AUTO → NACHT → TAG",
+      "Blau nur auf Daten, Amber nur als Warnung; der „Akzent“ der Oberfläche ist die Tinte selbst",
+      "Haarlinien-Nähte statt Schatten; ein einziger Schatten, nur auf Popovers",
+      "Zwei Stimmen: B612 fett für Werte und Gegenstände, B612 Mono versal-gesperrt für alles Meta",
+      "Ehrliche Buchhaltung: Messlücken, Anzeige-Bündelung, Datenstand, Zeitzone und Quelle stehen sichtbar im Blatt"
+    ],
+    "rules": [
+      { "name": "Die Datenblau-Regel", "body": "Die Rampe r1–r4 und line sind ausschließlich für Messdaten reserviert. Kein Button, kein Link, kein aktiver Zustand, kein Icon trägt Blau; Fokus, Auswahl und Aktiv-Zustände sprechen in Tinte. Ein neuer Datenkanal darf die Rampe erben oder eine eigene validierte Ordinal-Rampe mitbringen — Chrome nie.", "section": "colors" },
+      { "name": "Die Amber-Regel", "body": "Amber (warn) heißt immer „Messlücke/Warnung“, sonst nichts. good/crit erscheinen nur als Text mit Punkt oder gezeichnetem Icon. Kein Wert wird nur über Farbe codiert — jede Farbaussage steht auch als Text oder Position im Blatt.", "section": "colors" },
+      { "name": "Die Tinten-Akzent-Regel", "body": "Der aktive Zustand ist invertierte Tinte (ink auf ground), Hover ist eine Tintenstufe dunkler plus wash/lift oder baseline-Kontur. ::selection invertiert ebenso.", "section": "colors" },
+      { "name": "Die Zwei-Stimmen-Regel", "body": "B612 fett = das Gemessene (Werte, Stationsname, Panelkopf). B612 Mono = das Meta (Labels, Einheiten, Zeitstempel, Status, Achsen). Micro-Labels stehen VERSAL mit 0.12–0.14em Sperrung; Einheiten klein und unmittelbar am Wert. In der Statuszeile ist Emphase eine Tintenstufe (b = ink-2 bei Gewicht 400), kein Fett.", "section": "typography" },
+      { "name": "Die Tabellenziffern-Regel", "body": "Überall, wo Zahlen springen können, gilt font-variant-numeric: tabular-nums. Zahlformate deutsch (Intl de-AT, Komma), Datumsform „Do 20.08.“, Zeitstempel immer mit Zeitzonenkürzel (MESZ/MEZ), Zeitzone der Anzeige ist Europe/Vienna.", "section": "typography" },
+      { "name": "Die Naht-Regel", "body": "Flächen trennen sich durch 1px seam, niemals durch Schatten, Borders in Tintenfarbe oder Hintergrundwechsel großer Flächen. Wer eine neue Region anlegt, zieht eine Naht.", "section": "elevation" },
+      { "name": "Die Popover-Ausnahme", "body": "Nur was über dem Schirm schwebt (Popover), trägt den einen Schatten — zusammen mit screen-Fläche, seam-Kontur und 8px Radius. Nichts, was im Schirm liegt, wirft Schatten.", "section": "elevation" },
+      { "name": "Die Ein-Zug-Regel", "body": "Beim Nachladen dimmt der gesamte alte Stand — Charts, Staffel, Datenstand — als eine Fläche auf 45 % (opacity 0.2s ease-out) und bleibt ablesbar, bis der neue steht. Keine Spinner, keine Skeletons, keine Layoutsprünge; nur der Radarkegel der Marke rotiert.", "section": "components" },
+      { "name": "Die Druckzeilen-Regel", "body": "Zustände drucken sich selbst als Textzeilen in Statuszeile oder Fläche — VERSAL-Mono mit gezeichnetem Icon, Aktionen als unterstrichene Worte. Nie Toasts, Banner, Modals oder Overlay-Spinner.", "section": "components" },
+      { "name": "Die Buchhaltungs-Regel", "body": "Jede Darstellungsentscheidung wird ausgewiesen: Messwertzahl, Anzeige-Bündelung, Zeitraum mit Zeitzone, Station mit ID, Messlückenzahl, Quelle mit Lizenz. Lücken werden gezeigt, nie interpoliert oder glattgezogen.", "section": "components" }
+    ],
+    "dos": [
+      "Do jeden neuen Datenkanal als weiteres Messblatt andocken: figure-head-Anatomie (h2 + Einheit + Readout), geteilte Zeitachse, synchrones Fadenkreuz, Tabellen-Zwilling, Ausweis in der Statuszeile.",
+      "Do die Blau-Rampe (oder eine eigene validierte Ordinal-Rampe) ausschließlich auf Daten setzen; Klassifizierung immer am 10-min-Rohintervall (Grenzen 0,5 / 1,7 / 8,3 mm).",
+      "Do jede Trennung als 1px seam-Naht ziehen; Felder in ground einlassen statt umranden.",
+      "Do jeden Wert auch ohne Hover anbieten (Tabellen-Zwilling, direkte Labels, Anker-Annotation).",
+      "Do deutsch formatieren: de-AT-Komma, tabular-nums, „Do 20.08.“, Zeitzonenkürzel an jedem Zeitstempel, Einheiten klein in Mono am Wert.",
+      "Do Icons zeichnen: currentColor, Kernstrich 1.4, runde Kappen, aria-hidden; Fokus als 2px accent-Ring (offset 2, in Charts −2); volle Tastaturführung.",
+      "Do beide Schirme pflegen: jeder neue Token braucht Tag- und Nacht-Wert, geprüft in beiden Welten."
+    ],
+    "donts": [
+      "Don't Schatten auf dem Schirm — keine Cards, keine erhobenen Panels; der eine Schatten gehört den Popovers.",
+      "Don't Blau auf Chrome: kein blauer Button, Link oder Aktiv-Zustand; aktiv = invertierte Tinte, Links = unterstrichene Tinte.",
+      "Don't Glyph-/Font-Icons, Emoji oder Icon-Bibliotheken; keine Systemschriften als Zierde.",
+      "Don't Spinner, Skeletons, Toasts oder Modals — Dimm-Hold und gedruckte Statuszeilen sind die Ladesprache.",
+      "Don't Lücken interpolieren oder stumm bündeln; jede Aggregation wird beschriftet und ausgewiesen.",
+      "Don't Information nur über Farbe codieren; jede Farbaussage hat ein Text- oder Positions-Double.",
+      "Don't Radien über 8px, Pillen oder Kreisbuttons; keine neuen Grautöne außerhalb der Tinten- und Schirmskala."
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+node_modules
+dist
+*.local
+.DS_Store
+# Review-Screenshots (ephemer, werden je Runde neu erzeugt)
+.impeccable/review/
+# Frage-Daemon-Laufzeitdateien
+.impeccable/questions/
