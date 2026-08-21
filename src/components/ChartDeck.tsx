@@ -106,13 +106,18 @@ export default function ChartDeck({ series, rrMax, rrMaxAt, onBinChange }: Props
   const xB = (b: number) => PAD_L + b * slot
   const bw = Math.max(1.6, Math.min(24, slot - Math.max(1, slot * 0.28)))
 
+  // Kopffreiheit: trifft das Datenmaximum exakt die Skalenobergrenze (z. B. 5,0 auf
+  // einer 5er-Achse), endet der Balken an der beschrifteten Maximallinie — nie an der
+  // Blattkante. Der Bereich darüber gehört Annotation und Luft, die Skala bleibt ehrlich.
+  const HEADROOM = narrow ? 14 : 20
   const yMax = niceCeil(Math.max(1, ...view.rr.map((v) => v ?? 0)))
-  const y = (v: number) => PAD_T + (1 - v / yMax) * (H - PAD_T - PAD_B)
+  const y = (v: number) => PAD_T + HEADROOM + (1 - v / yMax) * (H - PAD_T - HEADROOM - PAD_B)
   const yTicks = axisTicks(yMax, 3)
 
+  const CHEADROOM = 10
   const cumEnd = view.cum[n - 1] ?? 0
   const cumMax = niceCeil(Math.max(1, cumEnd))
-  const cy = (v: number) => CPAD_T + (1 - v / cumMax) * (CH - CPAD_T - CPAD_B)
+  const cy = (v: number) => CPAD_T + CHEADROOM + (1 - v / cumMax) * (CH - CPAD_T - CHEADROOM - CPAD_B)
   const cumTicks = axisTicks(cumMax, 2)
 
   const bands = dayBands(t0, t1)
@@ -322,13 +327,13 @@ export default function ChartDeck({ series, rrMax, rrMaxAt, onBinChange }: Props
               x1={annot.x}
               y1={annot.y - 5}
               x2={annot.x + (annot.left ? -32 : 32)}
-              y2={Math.max(PAD_T + 24, annot.y - 32)}
+              y2={Math.max(PAD_T + 12, annot.y - 32)}
               stroke="var(--ink-2)"
               strokeWidth={1}
             />
             <text
               x={annot.x + (annot.left ? -37 : 37)}
-              y={Math.max(PAD_T + 22, annot.y - 34)}
+              y={Math.max(PAD_T + 10, annot.y - 34)}
               textAnchor={annot.left ? 'end' : 'start'}
               fill="var(--ink)"
               fontFamily="var(--mono)"
@@ -339,7 +344,7 @@ export default function ChartDeck({ series, rrMax, rrMaxAt, onBinChange }: Props
             </text>
             <text
               x={annot.x + (annot.left ? -37 : 37)}
-              y={Math.max(PAD_T + 34, annot.y - 22)}
+              y={Math.max(PAD_T + 22, annot.y - 22)}
               textAnchor={annot.left ? 'end' : 'start'}
               fill="var(--ink-2)"
               fontFamily="var(--mono)"

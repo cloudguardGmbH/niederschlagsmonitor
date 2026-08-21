@@ -6,7 +6,10 @@ Kompaktes Dashboard über der offenen [GeoSphere Austria Dataset API](https://da
 - **Niederschlags-Graph** — 10-min-Nadeln nach meteorologischen Intensitätsklassen, Anker-Annotation am Spitzenereignis, Kumulativ-Panel auf geteilter Zeitachse, Fadenkreuz-Ablesung (Maus + ←/→)
 - **Zeiträume** — 24 h / 48 h / 7 Tage / 30 Tage plus freier Datumsbereich (≤ 31 Tage); lange Zeiträume werden ehrlich gebündelt angezeigt (Ausweis in der Statuszeile), Kennzahlen rechnen immer aus den Rohdaten
 - **Tag-/Nacht-/Auto-Theme** (`?theme=light|dark` übersteuert), Zustand bleibt im localStorage erhalten
+- **Teilbare Links**: `?station=<ID>&range=24h|48h|7t|30t` setzt Station und Zeitraum, z. B. [`?station=5735&range=7t`](https://niederschlagsmonitor.ghg22.at/?station=5735&range=7t) für Buchberg, letzte 7 Tage
 - Kein Backend: der Browser spricht direkt mit der GeoSphere-API (CORS offen)
+
+Live: **<https://niederschlagsmonitor.ghg22.at/>** (Cloudflare Pages, deployt automatisch bei jedem Push auf `main`).
 
 Designsystem und Produktkontext sind im Repo dokumentiert: [DESIGN.md](DESIGN.md), [PRODUCT.md](PRODUCT.md).
 

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import ChartDeck from './components/ChartDeck'
 import { AutoTheme, Cross, Moon, RadarMark, Sun, Tri } from './components/Icons'
 import RangeControl, { type RangeSpec } from './components/RangeControl'
@@ -9,7 +9,7 @@ import { useMetadata, usePersisted, useSeries } from './lib/hooks'
 import { computeStats } from './lib/stats'
 import { DEFAULT_STATION_ID, selectableStations } from './lib/stations'
 import { useTheme, type ThemeMode } from './lib/theme'
-import { customRange, fmtDateInput, fmtStampCompact, presetRange, PRESETS, tzAbbr, type TimeRange } from './lib/time'
+import { customRange, fmtDateInput, fmtStampCompact, presetRange, PRESETS, tzAbbr, type PresetId, type TimeRange } from './lib/time'
 
 const THEME_ORDER: ThemeMode[] = ['auto', 'nacht', 'tag']
 const THEME_LABEL: Record<ThemeMode, string> = { auto: 'AUTO', nacht: 'NACHT', tag: 'TAG' }
@@ -39,6 +39,29 @@ export default function App() {
   const [spec, setSpec] = usePersisted<RangeSpec>('monitor.range', { kind: 'preset', id: '7t' })
   const [reload, setReload] = useState(0)
   const [binLabel, setBinLabel] = useState<string | null>(null)
+
+  // Teilbare Links: ?station=<id>&range=<24h|48h|7t|30t> setzt den Zustand einmalig
+  // und verschwindet danach aus der Adresszeile (?theme= bleibt).
+  useEffect(() => {
+    const p = new URLSearchParams(location.search)
+    const st = Number(p.get('station'))
+    const rg = p.get('range')
+    let used = false
+    if (Number.isFinite(st) && st > 0) {
+      setStationId(st)
+      used = true
+    }
+    if (rg && PRESETS.some((x) => x.id === rg)) {
+      setSpec({ kind: 'preset', id: rg as PresetId })
+      used = true
+    }
+    if (used) {
+      p.delete('station')
+      p.delete('range')
+      history.replaceState(null, '', location.pathname + (p.toString() ? `?${p.toString()}` : ''))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- einmalige URL-Übernahme beim Start
+  }, [])
 
   const station = useMemo(
     () => stations.find((s) => s.id === stationId) ?? stations.find((s) => s.id === DEFAULT_STATION_ID) ?? stations[0] ?? null,
